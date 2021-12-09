@@ -32,8 +32,10 @@ if [ ! -d /opt/portapack-mayhem ]; then
 	echo "--- Cloning Mayhem Portapack repository from GitHub ---"
 	sleep 1
 	git clone --recurse-submodules https://github.com/eried/portapack-mayhem.git
-	# Replace the python version in libopencm3 to use python3
-	sed -i 's/env python/env python3/g' portapack-mayhem/hackrf/firmware/libopencm3/scripts/irq2nvic_h
+
+        # Correct files to use python3
+        grep -rl 'python'\$ /opt/portapack-mayhem/ | xargs sed -i 's/python/python3/g'
+        grep -rl 'python ' /opt/portapack-mayhem/ | xargs sed -i 's/python /python3 /g'
 fi
 
 cd portapack-mayhem
